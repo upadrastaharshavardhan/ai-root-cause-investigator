@@ -1,0 +1,15 @@
+collectors:
+  - name: azure_devops
+    enabled: true
+    priority: 10
+  - name: git
+    enabled: true
+    priority: 20
+  - name: playwright_artifacts
+    enabled: true
+    priority: 30
+  - name: history
+    enabled: true
+    priority: 40
+
+analyzers: []

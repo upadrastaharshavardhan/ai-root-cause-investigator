@@ -1,0 +1,30 @@
+services:
+  rci-api:
+    build: .
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      APP_ENV: production
+      CHROMA_PERSIST_DIR: /app/data/chroma
+    volumes:
+      - rci-data:/app/data
+      - ./configs:/app/configs:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  # Optional: Prometheus (scrape /metrics if instrumented)
+  # prometheus:
+  #   image: prom/prometheus:v2.53.0
+  #   volumes:
+  #     - ./configs/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+  #   ports:
+  #     - "9090:9090"
+
+volumes:
+  rci-data:

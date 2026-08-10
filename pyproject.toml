@@ -1,0 +1,96 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ai-root-cause-investigator"
+version = "1.0.0"
+description = "Enterprise-grade AI Root Cause Investigator for Playwright and framework-agnostic test failures"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "Apache-2.0" }
+authors = [{ name = "AI Quality OS Team" }]
+keywords = ["playwright", "test-automation", "root-cause-analysis", "langgraph", "qa", "devops"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Quality Assurance",
+    "Topic :: Software Development :: Testing",
+]
+dependencies = [
+    "pydantic>=2.7",
+    "pydantic-settings>=2.3",
+    "fastapi>=0.111",
+    "uvicorn[standard]>=0.30",
+    "httpx>=0.27",
+    "tenacity>=8.3",
+    "structlog>=24.1",
+    "python-dotenv>=1.0",
+    "pyyaml>=6.0",
+    "networkx>=3.3",
+    "matplotlib>=3.9",
+    "langgraph>=0.2",
+    "langchain-core>=0.2",
+    "langchain-openai>=0.1",
+    "langchain-community>=0.2",
+    "chromadb>=0.5",
+    "sentence-transformers>=3.0",
+    "gitpython>=3.1",
+    "azure-devops>=7.1.0b4",
+    "msrest>=0.7",
+    "playwright>=1.45",
+    "aiofiles>=23.2",
+    "orjson>=3.10",
+    "rich>=13.7",
+    "typer>=0.12",
+    "prometheus-client>=0.20",
+    "opentelemetry-api>=1.25",
+    "opentelemetry-sdk>=1.25",
+    "opentelemetry-instrumentation-fastapi>=0.46b0",
+    "cryptography>=42.0",
+    "python-jose[cryptography]>=3.3",
+    "passlib[bcrypt]>=1.7",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.2",
+    "pytest-asyncio>=0.23",
+    "pytest-cov>=5.0",
+    "ruff>=0.5",
+    "mypy>=1.10",
+    "httpx>=0.27",
+    "respx>=0.21",
+]
+llm = [
+    "langchain-anthropic>=0.1",
+    "langchain-google-genai>=1.0",
+]
+
+[project.scripts]
+rci = "src.cli:app"
+rci-api = "src.api.app:run"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "UP", "B", "SIM", "RUF"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+filterwarnings = ["ignore::DeprecationWarning"]
